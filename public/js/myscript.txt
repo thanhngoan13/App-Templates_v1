@@ -1,0 +1,237 @@
+
+
+$(document).ready(function(){
+    //Validate
+    $('#khaibaothuebao').validate({
+        rules:{
+            name: "required",
+            SLID:{
+                required: true,
+                minlength: 9,
+                maxlength: 9
+            },
+            VlanNet: "required",
+            ipOlt: "required"
+        },
+        messages: {
+            name: "Vui lòng nhập tên!",
+            SLID: {
+              required: "Vui lòng nhập SLID",
+              minlength: "Độ dài tối thiểu 9 kí tự",
+              maxlength: "Độ tài tối đa 9 kí tự"
+            },
+            VlanNet: "Vui lòng nhập VLAN NET",
+            ipOlt: "Vui lòng nhập IP OLT"
+          }
+    });
+    //get IDOLT
+    function getIDOLT(){
+        var SLID = $('#idPassword').val().trim();
+        var IDOLT = SLID.substring(0,2).replace(/0/g,'');
+        return IDOLT;
+    };
+    // Get Card
+    function getCard(){
+        var SLID = $('#idPassword').val().trim();
+        var card = SLID.substring(2,4).replace(/0/g,'');
+        return card;
+    };
+    // Get Pon
+    function getPon(){
+        var SLID = $('#idPassword').val().trim();
+        var Pon = SLID.substring(4,6).replace(/0/g,'');
+        return Pon;
+    };
+       // Get IDPort
+    function getIDPort(){
+        var SLID = $('#idPassword').val().trim();
+        var IDPort = SLID.substring(6,9).replace(/00/g,'').replace(/0/g,'');
+        return IDPort;
+    };
+    function getIPOLT(){
+        var IPOLT = $('#idIPOLT').val().trim();
+        return IPOLT;
+    };
+    $("input").change(function(){
+        console.log(getIPOLT());
+    });
+///////////////////////////////////////////////////////////Begin tempalte OLT ALU///////////////////////////////////////////////////////////
+    function deleteOnt(IDOLT,card,Pon,IDPort){
+        var template = 
+        'configure equipment ont interface 1/' + IDOLT +'/'+card+ '/'+Pon+ '/'+IDPort+' admin-state down' 
+        + '\n'
+        + 'configure equipment ont interface 1/' + IDOLT +'/'+card+ '/'+Pon+ '/'+IDPort
+        + '\n'
+        + 'exit all'
+        return template;
+    };
+    function createOnt(IDOLT,card,Pon,IDPort){
+        var SLID = $('#idPassword').val().trim();
+        var template = 
+            //Khai ont
+            'configure equipment ont interface 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + ' sw-ver-pland DISABLED subslocid '+ SLID +' sw-dnload-version disabled enable-aes enable'
+            + '\n'
+            + 'configure equipment ont slot 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14 planned-card-type veip plndnumdataports 1 plndnumvoiceports 0 port-type uni admin-state up'
+            + '\n'
+            + 'configure interface port uni:1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 admin-up'
+            + '\n'
+            + 'exit all'
+        return template;
+    };
+    function createNet(IDOLT,card,Pon,IDPort){
+        var vlanNet = $('#idvlan').val();
+                    
+        var template = 
+             //Khai net
+            'configure qos interface 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + ' queue 0 shaper-profile name:Fiber300M'
+            + '\n'
+            + 'configure qos interface 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 upstream-queue 0 bandwidth-profile name:Fiber300M bandwidth-sharing uni-sharing'
+            + '\n'
+            + 'configure bridge port 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1'
+            + '\n'
+            + 'configure bridge port 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 vlan-id 11 tag single-tagged network-vlan ' + vlanNet + ' vlan-scope local'
+            + '\n'
+            + 'configure bridge port 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 max-unicast-mac 20'
+            + '\n'
+            + 'configure bridge port  1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 vlan-id 4000 tag single-tagged network-vlan 4052 vlan-scope local'
+            + '\n'
+            + 'exit all'
+        return template;
+    };
+    function createMytv(IDOLT,card,Pon,IDPort){
+        var vlanMytv = $('#idvlanmytv').val();       
+        var template = 
+             //Khai MyTV
+             'configure qos interface 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 queue 4 shaper-profile name:IPTV_down_22M'
+            + '\n'
+            + 'configure qos interface 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 upstream-queue 4 bandwidth-profile name:IPTV_up bandwidth-sharing uni-sharing'
+            + '\n'
+            + 'configure bridge port 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 vlan-id 12 tag single-tagged network-vlan ' + vlanMytv + ' vlan-scope local'
+            + '\n'
+            + 'configure bridge port 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 vlan-id 12 max-unicast-mac 10'
+            + '\n'
+            + 'configure  igmp channel vlan: 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1:12 max-num-group 10'
+            + '\n'
+            + 'exit all'
+        return template;
+    };
+
+    function createIMS(IDOLT,card,Pon,IDPort){       
+        var template = 
+             //Khai IMS
+             'configure interface port uni: 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 admin-up'
+            + '\n'
+            + 'configure bridge port 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 max-unicast-mac 10'
+            + '\n'
+            + 'configure qos interface 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 queue 3 shaper-profile name:VoIP_IMS'
+            + '\n'
+            + 'configure qos interface 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 upstream-queue 3 bandwidth-profile name:VoIP_IMS'
+            + '\n'
+            + 'configure bridge port 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 vlan-id 13 tag single-tagged network-vlan 1401 vlan-scope local'             
+            + '\n'
+            + 'exit all'
+        return template;
+    };
+    function createMegawan(IDOLT,card,Pon,IDPort){   
+        var vlanMegawan = $('#idvlanmegawan').val();  
+        var speed = ($('#idspeed').val()*1024*1.1).toFixed() ; 
+        var nameMegawan = $('#idnamemegawan').val() ;
+        var template = 
+            '================//Khai profile//======================= '
+            + '\n'
+            + 'configure qos profiles ingress-qos VPN_TC2 dot1-p0-tc 2 dot1-p1-tc 2 dot1-p2-tc 2 dot1-p3-tc 2 dot1-p4-tc 2 dot1-p5-tc 2 dot1-p6-tc 2 dot1-p7-tc 2'
+            + '\n'
+            + 'configure qos profiles shaper FiberVPN_'+ speed +'M committed-info-rate 0 committed-burst-size 0 excess-info-rate '+ speed +' type singletokenbucketgpon'
+            + '\n'
+            + 'configure qos profiles bandwidth FiberVPN_'+ speed +'M committed-info-rate 0 assured-info-rate '+ speed +' excessive-info-rate '+ speed +' delay-tolerance 8'
+            + '\n'
+            + '===================// khai vlan (nếu phần tốc độ đã khai thì khai phần dưới)//======================'
+            + '\n'
+            + 'configure vlan id '+ vlanMegawan +' mode residential-bridge name "'+ nameMegawan +'" new-broadcast enable unknown-unicast pt2ptgem-flooding in-qos-prof-name name:VPN_TC2'
+            + '\n'
+            + 'configure service vpls '+ vlanMegawan +' customer 1 v-vpls vlan '+ vlanMegawan +' create'
+            + '\n'
+            + 'configure service vpls '+ vlanMegawan +' description "'+ nameMegawan +'"'
+            + '\n'
+            + 'configure service vpls '+ vlanMegawan +' sap lag-1:'+ vlanMegawan +' create'
+            + '\n'
+            + 'configure service vpls '+ vlanMegawan +' sap lt:1/1/1:'+ vlanMegawan +' create'
+            + '\n'
+            + 'configure service vpls '+ vlanMegawan +' no shutdown'
+            + '\n'
+            + 'exit all'
+            + '\n'
+            +'===================//cấu hình ONT//======================'
+            + '\n'
+            + 'configure qos interface 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 upstream-queue 2 bandwidth-profile name:FiberVPN_'+ vlanMegawan +'M bandwidth-sharing uni-sharing'
+            + '\n'
+            + 'configure qos interface 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort + '/14/1 queue 2 shaper-profile name:FiberVPN_'+ vlanMegawan +'M'
+            + '\n'
+            + 'configure bridge port 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort +' /14/1'
+            + '\n'
+            + 'configure bridge port 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort +' /14/1 vlan-id 15 tag single-tagged network-vlan '+ vlanMegawan +' vlan-scope local'
+            + '\n'
+            + 'configure bridge port 1/'+ IDOLT +'/'+ card + '/'+ Pon + '/'+ IDPort +' /14/1 max-unicast-mac 20'
+            + '\n'
+            + 'exit all'
+        return template;
+    };
+    
+   //Khai tất cả net, mytv
+    $('#btn-createAll').click(function(){
+        $('#outputCLI').html(
+            deleteOnt(getIDOLT(),getCard(),getPon(),getIDPort()) 
+            +'\n'
+            + createOnt(getIDOLT(),getCard(),getPon(),getIDPort())
+            +'\n'
+            + createMytv(getIDOLT(),getCard(),getPon(),getIDPort())
+            +'\n'
+        );
+    });
+    //Xóa ONT
+    $('#btn-del').click(function(){
+        $('#outputCLI').html(
+            deleteOnt(getIDOLT(),getCard(),getPon(),getIDPort())
+            );
+
+    });
+    //Khai ONT
+    $('#btn-create-onu').click(function(){
+            $('#outputCLI').html(
+            createOnt(getIDOLT(),getCard(),getPon(),getIDPort())
+            );
+    });
+    //Khai NET
+    $('#btn-net').click(function(){
+        $('#outputCLI').html(
+            createNet(getIDOLT(),getCard(),getPon(),getIDPort())
+        );       
+    });
+    //Khai MyTV
+    $('#btn-mytv').click(function(){
+        $('#outputCLI').html(  
+             createMytv(getIDOLT(),getCard(),getPon(),getIDPort())
+        );
+    });
+    $('#btn-ims').click(function(){
+        $('#outputCLI').html(  
+             createIMS(getIDOLT(),getCard(),getPon(),getIDPort())
+        );
+    });
+    //Khai Megawan
+    $('#btn-megawan').click(function(){
+        $('#outputCLI').html(
+            createMegawan(getIDOLT(),getCard(),getPon(),getIDPort())  
+        );
+    });
+    //Khai CSDL_DC
+    $('#btn-csdl-dc').click(function(){
+        $('#outputCLI').html('Coming soon')
+    });
+///////////////////////////////////////////////////////////End tempalte OLT ALU///////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////Begin tempalte OLT ZTE/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////End tempalte OLT ZTE///////////////////////////////////////////////////////////
+
+
+});

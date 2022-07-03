@@ -1,0 +1,34 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html>
+<head >
+    <%- include( '../partials/head.ejs') -%>
+</head>
+
+<body class="w3-light-grey">
+	<!-- Top container -->
+	<div class="w3-container">
+		<%- include('../partials/top-container.ejs') -%>
+	</div>
+	<!-- End Top container -->
+
+	<!-- Sidebar/Menu -->
+	<%- include('../partials/sidebar.ejs') -%>
+	<!-- End Sidebar/Menu -->
+
+	<!-- Overlay effect when opening sidebar on small screens -->
+
+	<!-- End Overlay -->
+
+	<!-- Main Page -->
+	<div class="w3-container" style="padding: 40px;" >
+		<!-- Overview -->
+	<%- include('../pages/telnet.ejs') -%>
+		<!-- End Overview -->
+
+	</div>
+	<!-- End Main Page -->
+
+</body>
+</html>

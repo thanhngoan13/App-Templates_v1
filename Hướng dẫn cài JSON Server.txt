@@ -1,0 +1,20 @@
+1. tạo thư mục mới"json server"
+2. npm init > enter để tạo file package.json để quản lý thư viện
+3. npm i json-server
+D:\2.Nodejs\Project Newbie\App Template\App Template\src\resources\scss\app.scss
+4. Chạy debug
+{
+"name": "Launch Chrome",
+ "request": "launch",
+ "type": "chrome",
+ "url": "http://127.0.0.1:5500/index.html",
+ "webRoot": "${workspaceFolder}"
+}
+
+5. npm install express 
+6. npm i nodemon --save-dev  //dev nodejs
+7. npm i morgan --save-dev // theo doi log html
+8. npm install node-sass --save-dev
+9. npm i prettier lint-staged husky --save-dev  // làm đẹp code
+10. npm i telnet-stream --save-dev 
+11. npm i child_process --save-dev 
