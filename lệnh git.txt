@@ -1,0 +1,18 @@
+git branch -M main
+git push -u origin main
+git remote add origin https://github.com/lehoangvanwangzan/App-Templates_v1.git
+git push -u origin master
+git log
+git checkout -b App-Templates_v1
+git add <tên-tập-tin> hoặc git add *
+git commit -m "Ghichú-cho-Commit"
+git push origin HEAD
+git pul
+git merge <nhánh>
+git merge origin/master
+
+
+/// 
+git pull
+git pull origin
+git fetch origin 
