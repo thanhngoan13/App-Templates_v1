@@ -19,11 +19,6 @@ module.exports.default_func = function(app, process) {
     app.get('/getInfoOLT/:ip', khaibaothuebaoController.getInfoOLT);
     // lấy VLANVOD
     app.get('/getVlanNet/:slid_ip', khaibaothuebaoController.getVlanNet);
-    //render pages
-    // get telnet
-/*      app.get('/gettelnetdevice/:ip',(req, res) => { 
-        telnetController.telnetDevice(req, res, process, tSocket);
-    }); */
     app.get('/gettelnetdevice/:ip', telnetController.telnetDevice);
     app.use('/sotrucca', khaibaothuebaoController.sotrucca);
     app.use('/telnet', telnetController.getTelnet);

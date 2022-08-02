@@ -5,19 +5,18 @@ class telnetController {
     getTelnet(req, res){
         res.render('pages/index_telnet');
     }
-    telnetDevice(req, res){    //,process
+    telnetDevice(req, res){    
         var ip = req.params.ip;
-        var cmd = req.params.cmd
-        // var cmcli = req.params.cmcli
-        telnetModel.getTelnetDevice(ip, function (data) {
+        telnetModel.getTelnetDevice(ip, function (err, data) {
+            console.log(data);
             res.send(data);
-/*               if (!err) {
+           if (!err) {
                 res.send(data);  
                 console.log(data);
             } else {
                 res.send({ result: 'loi' });
                  console.log('loi');
-            }  */ 
+            }   
         })
     }
 };
