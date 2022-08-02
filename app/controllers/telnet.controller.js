@@ -7,16 +7,17 @@ class telnetController {
     }
     telnetDevice(req, res){    //,process
         var ip = req.params.ip;
+        var cmd = req.params.cmd
         // var cmcli = req.params.cmcli
         telnetModel.getTelnetDevice(ip, function (data) {
             res.send(data);
-     /*          if (!err) {
+/*               if (!err) {
                 res.send(data);  
                 console.log(data);
             } else {
                 res.send({ result: 'loi' });
                  console.log('loi');
-            }  */
+            }  */ 
         })
     }
 };
