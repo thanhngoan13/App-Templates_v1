@@ -9,6 +9,7 @@ $(document).ready(function(){
          $.ajax({
             url:'/gettelnetdevice/' + IPDevice,
             type: 'GET',
+            dataType: "json",
             success: function(res){
                       console.log(res);
                 $('#outputCMD').val(res);
@@ -18,11 +19,15 @@ $(document).ready(function(){
         }
     });
     // nút gửi lệnh
-    $('#idcmd').click(function(){
-        var cmdDevice = $('#idComment').val();
-        // console.log(cmdDevice)
-        $('#outputCMD').val(cmdDevice);
-      
+    $('#idComment').keypress(function(e){
+        var key = e.which;
+        if(key == 13){
+            var cmdDevice = $('#idComment').val();
+            console.log(cmdDevice);
+            $('#outputCMD').html($('#idComment').val() + "\n");
+
+        }
+
        });
 
 

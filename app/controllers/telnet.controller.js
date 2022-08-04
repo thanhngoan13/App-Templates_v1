@@ -1,5 +1,8 @@
 var telnetModel = require('../models/telnet.model');
- ({TelnetSocket} = require("telnet-stream"));
+const net = require("net");
+const {TelnetSocket} = require("telnet-stream");
+const { data } = require("jquery");
+ //({TelnetSocket} = require("telnet-stream"));
 class telnetController {
 
     getTelnet(req, res){
@@ -7,17 +10,51 @@ class telnetController {
     }
     telnetDevice(req, res){    
         var ip = req.params.ip;
-        telnetModel.getTelnetDevice(ip, function (err, data) {
-            console.log(data);
-            res.send(data);
-           if (!err) {
-                res.send(data);  
-                console.log(data);
-            } else {
-                res.send({ result: 'loi' });
-                 console.log('loi');
-            }   
-        })
+        //res.send(ip);
+        var params = {
+            host: ip,
+            port: 23,
+            shellPrompt: '/ # ',
+            timeout: 1500,
+            // removeEcho: 4
+          }
+          var socket = net.createConnection(params, function(){
+          });
+          
+        var tSocket = new TelnetSocket(socket);
+
+        tSocket.on("do", function(option) {
+            tSocket.writeWont(option);
+        });
+        tSocket.on('data', function(buffer) {         
+            if (buffer.toString('utf-8').search('login:')!= -1) {
+                tSocket.write('admin\r\n');
+                // console.log(buffer.toString('utf-8'));
+            }
+              if(buffer.toString('utf-8').search('Password:')!= -1){
+                tSocket.write('admin\r\n');
+                // console.log(buffer.toString('utf-8'));
+            }
+            if(buffer.toString('utf-8').search('>')!= -1){
+                tSocket.write('enable\r\n');
+                // console.log(buffer.toString('utf-8'));
+            }
+            if(buffer.toString('utf-8').search('#')!= -1){
+                tSocket.write('show port\r\n');
+                 tSocket.write('<br>');
+                // 
+            }
+           
+           // console.log(buffer.toString('utf-8')); 
+             return buffer;
+            });
+            //tSocket.on("close");
+
+             
+            //console.log(typeof buffer.toString('utf-8'))
+          
+        
     }
+    
 };
 module.exports = new telnetController();
