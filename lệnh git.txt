@@ -16,3 +16,4 @@ git merge origin/master
 git pull
 git pull origin
 git fetch origin 
+// cập nhật mới
