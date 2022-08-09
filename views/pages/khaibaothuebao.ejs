@@ -1,145 +1,108 @@
-<form id="khaibaothuebao" class="w3-container" style="height: 240px;" >
+<div class="w3-container w3-center ">
+  <h1 class="text-info">Khai Báo Thuê Bao</h1>
+</div>
+<form class="w3-container" style="height: 240px;">
+  <div class="form-group row ">
+    <h4 class="col-lg-4"> Nhập Thông Số</h4>
+  </div>
   <div class="form-group row">
     <div class="col-lg-4">
-    <span  class="col-lg-1 col-form-label  " style="min-width: 100px" >Loại OLT</span>
+      <span for="" class="col-lg-1 col-form-label  " style="min-width: 100px">Loại OLT</span>
       <span class="">
-        <select class="form-control"  id="typeOLT" > 
+        <select class="form-control" id="typeOLT">
           <option class="">Alcatel</option>
           <option>ZTE</option>
           <option>ZTE-Mini</option>
-          <option>HUAWEI</option> 
+          <option>HUAWEI</option>
           <option>DASAN</option>
         </select>
       </span>
-    </div>  
+    </div>
     <div class="col-lg-4">
-    <span  class="col-lg-1 col-form-label">Loại ONT</span>
-        <span class="">
-          <select class="form-control"  id="typeModem" > 
-            <option>Igate-020</option>
-            <option>Igate-040</option>
-            <option>Igate-240</option>
-            <option>Igate-020H</option>
-            <option>Igate-040H</option>
-            <option>Igate-240H</option>
-            <option>ALU-240</option>
-            <option>DASAN</option>
-            <option>F600</option>
-            <option>Vlink1000</option>
-          </select>
-        </span>
-      </div>  
-    
-      <div class="col-lg-4">
-      <span  class="col-lg-1 col-form-label " style="min-width: 100px" >VLAN Megawan</span>
-        <span class="">
-          <input name="vlanMegawan" type="text" class="form-control" id="idvlanmegawan" placeholder="VLAN Megawan">
-        </span>
-      </div>
+      <span for="" class="col-lg-1 col-form-label">Loại ONT</span>
+      <span class="">
+        <select class="form-control" id="typeModem">
+          <option>Igate-020</option>
+          <option>Igate-040</option>
+          <option>Igate-240</option>
+          <option>Igate-020H</option>
+          <option>Igate-040H</option>
+          <option>Igate-240H</option>
+          <option>ALU-240</option>
+          <option>DASAN</option>
+          <option>Vlink1000</option>
+        </select>
+      </span>
+    </div>
+
+    <div class="col-lg-4">
+      <span for="" class="col-lg-1 col-form-label " style="min-width: 100px">VLAN Megawan</span>
+      <span class="">
+        <input type="text" class="form-control" id="" placeholder="VLAN Megawan">
+      </span>
+    </div>
   </div>
 
   <div class="form-group row">
-    
+
     <div class="col-lg-4">
-      <span  class="col-lg-1 col-form-label" style="min-width: 100px" >Chuỗi Password</span>
-      <input name="SLID" type="text" class="form-control" id="idPassword" placeholder = "SLID">
+      <span for="" class="col-lg-1 col-form-label" style="min-width: 100px">Chuỗi Password</span>
+      <input type="text" class="form-control" id="idPassword" placeholder="Chuỗi Password" oninput="getVlanNet(this.value)">
     </div>
 
-    
-    <div class="col-lg-4">
-      <span  class="col-lg-1 col-form-label  " style="min-width: 100px">Vlan NET</span>
-      <input name="VlanNet" type="text" class="form-control" id="idvlanNet" placeholder="Vlan NET">
 
+    <div class="col-lg-4">
+      <span for="" class="col-lg-1 col-form-label  " style="min-width: 100px">Vlan NET</span>
+      <input type="text" class="form-control" id="idvlanNet" placeholder="Vlan NET">
     </div>
 
-    
+
     <div class="col-lg-4">
-      <span  class="col-lg-1 col-form-label  " style="min-width: 100px">Tốc Độ</span>
-      <input type="text" class="form-control" id="idspeed" placeholder="Mb">
+      <span for="" class="col-lg-1 col-form-label  " style="min-width: 100px">Tốc Độ</span>
+      <input type="text" class="form-control" id="" placeholder="Mb">
     </div>
-    
+
   </div>
   <div class="form-group row">
-    
+
     <div class="col-lg-4">
-      <span id="idvlanGNMS"  class="col-lg-1 col-form-label  " style="min-width: 100px">IP OLT</span>
-      <input name="ipOlt" type="text" class="form-control" id="idIPOLT" placeholder="IP OLT" oninput="getInfoOLT(this.value)">
+      <span for="" class="col-lg-1 col-form-label  " style="min-width: 100px">IP OLT</span>
+      <input type="text" class="form-control"  id="idIPOLT" placeholder="IP OLT" oninput="getInfoOLT(this.value)">
     </div>
 
-    
+
     <div class="col-lg-4">
       <span for="inputPassword3" class="col-lg-1 col-form-label  " style="min-width: 100px">VLAN VOD</span>
-      <input name="vlanvod" type="text" class="form-control" id="idvlanmytv" placeholder="VLAN VOD">
+      <input type="text" class="form-control" id="idvlanmytv" placeholder="VLAN VOD">
+      <input type="hidden" class="form-control" id="idvlanGNMS" >
     </div>
 
-    
+
     <div class="col-lg-4">
       <span for="inputPassword3" class="col-lg-1 col-form-label  " style="min-width: 100px">Tên Kênh</span>
-      <input type="text" class="form-control" id="idnamemegawan" placeholder="Tên Kênh">
+      <input type="text" class="form-control" id="" placeholder="Tên Kênh">
     </div>
-  </div> 
-  <div class="selectOLT">
-  <div class="form-group row">
-    <div class="col-lg-4">
-      <span  class="col-lg-1 col-form-label" style="min-width: 100px" >User NET</span>
-      <input name="usernet" type="text" class="form-control" id="idUser" placeholder = "User NET">
-    </div>
-
-    
-    <div class="col-lg-4">
-      <span  class="col-lg-1 col-form-label  " style="min-width: 100px">Cổng LAN</span>
-      <input name="portlan" type="text" class="form-control" id="idPortLAN" placeholder="Port">
-
-    </div>
-
-    <div class="col-lg-4">
-      <span  class="col-lg-1 col-form-label  " style="min-width: 100px">Cổng LAN MW</span>
-      <input name="portlanmw" type="text" class="form-control" id="idPortLANMW" placeholder="Port">
-    </div>
-    
-  </div>
-  <div class="form-group row">
-    <div class="col-lg-4">
-      <span  class="col-lg-1 col-form-label" style="min-width: 100px" >Số IMS</span>
-      <input name="ims" type="text" class="form-control" id="idIMS" placeholder = "Số IMS">
-    </div>
-
-    
-    <div class="col-lg-4">
-      <span  class="col-lg-1 col-form-label  " style="min-width: 100px">Pass IMS</span>
-      <input name="passims" type="text" class="form-control" id="idPassIMS" placeholder="Pass IMS">
-
-    </div>
-    
-  </div>
-  <div class="form-group row">
-    <div class="col-lg-4">
-      <span  class="col-lg-1 col-form-label" style="min-width: 100px" >System ID OLT</span>
-      <input name="sysolt" type="text" class="form-control" id="idSysOLT" placeholder = "ID OLT">
-    </div>
-
-  </div>
 
   </div>
   <div class="row p-2">
     <div class="col-lg-2 p-2">
-        <button id="btn-createAll" type="button" class="btn btn-outline-primary button btn-lg">
-        <span class="bi bi-stickies-fill"></span> Khai All 
-        </button>
+      <button id="btn-createAll" type="button" class="btn btn-outline-primary button btn-lg">
+        <span class="bi bi-stickies-fill"></span> Khai All
+      </button>
     </div>
     <div class="col-lg-2 p-2">
-        <button id="btn-del" type="button" class="btn btn-outline-primary button btn-lg">
-          <span class="bi bi-trash"></span> Remove 
-        </button>
+      <button id="btn-del" type="button" class="btn btn-outline-primary button btn-lg">
+        <span class="bi bi-trash"></span> Remove
+      </button>
     </div>
     <div class="col-lg-2 p-2">
       <button id="btn-create-onu" type="button" class="btn btn-outline-primary button btn-lg">
-          <span class="bi bi-modem"></span> Khai onu 
+        <span class="bi bi-modem"></span> Khai onu
       </button>
     </div>
-      <div class="col-lg-2 p-2">
+    <div class="col-lg-2 p-2">
       <button id="btn-net" type="button" class="btn btn-outline-primary button btn-lg">
-          <span class="bi bi-hdd-network green-color"></span> Khai NET 
+        <span class="bi bi-hdd-network green-color"></span> Khai NET
       </button>
     </div>
     <div class="col-lg-2 p-2">
@@ -148,27 +111,205 @@
       </button>
     </div>
     <div class="col-lg-2 p-2">
-      <button id="btn-ims" type="button" class="btn btn-outline-primary button btn-lg">
-        <span class="bi bi-tv green-color"></span> Khai IMS
-      </button>
-    </div>
-    <div class="col-lg-2 p-2">
       <button id="btn-megawan" type="button" class="btn btn-outline-primary button btn-lg">
         <span class="bi bi-hdd-network green-color"></span> Khai Megawan
       </button>
     </div>
     <div class="col-lg-2 p-2">
-        <button id="btn-csdl-dc" type="button" class="btn btn-outline-primary button btn-lg">
-          <span class="bi bi-person-plus green-color"></span> Khai CSDL_DC
-        </button>
-      </div>
-      
-  </div> 
-    
-    <div class="form-group p-2">
-      <h4>Lệnh tương ứng</h4>
-      <textarea class="form-control" id="outputCLI" rows="10">
-      </textarea>
+      <button id="btn-csdl-dc" type="button" class="btn btn-outline-primary button btn-lg">
+        <span class="bi bi-person-plus green-color"></span> Khai CSDL_DC
+      </button>
     </div>
+
+    <div class="col-lg-2 p-2">
+      <button id="btn-showmac" type="button" class="btn btn-outline-primary button btn-lg" onclick="getDataShowMac()">
+        <span class="bi bi-person-plus green-color"></span> Show mac
+      </button>
+    </div>
+    <div class="col-lg-2 p-2">
+      <button id="btn-showinfoOnu" type="button" class="btn btn-outline-primary button btn-lg" onclick="getDataShowInfoOnu()">
+        <span class="bi bi-person-plus green-color"></span> Show đồng bộ
+      </button>
+    </div>
+  </div>
+
+  <div class="form-group p-2">
+    <h4>Lệnh tương ứng</h4>
+    <textarea class="form-control" id="outputCLI" rows="10">
+
+    </textarea>
+  </div>
 </form>
 
+<script>
+
+
+     
+    var timeoutID;
+    var timeoutID2;
+    function delayedAlert() {
+        timeoutID = setInterval(showAlert, 500);
+                              }
+    function showAlert() {
+        $("#outputCLI").html("Đang lấy dữ liệu.............");
+      
+                          }
+
+    function delayedAlert2() {
+          timeoutID2 = setInterval(showAlert2, 700);
+          }
+    function showAlert2() {
+          $("#outputCLI").html("Đang lấy dữ liệu");
+      
+                }
+  
+      function clearAlert() {
+        clearInterval(timeoutID);
+        clearInterval(timeoutID2);
+      }
+  function getDataShowMac() {
+
+    var ip = document.getElementById('idIPOLT').value;
+    var chuoiid = document.getElementById('idPassword').value;
+
+    var slid_ip = chuoiid + "_" + ip;
+    if (chuoiid.length == 9 && ip.length == 11 ) {
+       
+      
+      $.ajax({
+        url: '/getmacOLT/' + slid_ip,
+        type: 'GET',
+        beforeSend: function(){
+          delayedAlert();
+          delayedAlert2();
+        },
+        complete: function() {
+          clearAlert();
+        },
+        success: function (res) {
+        
+          $("#outputCLI").html(res);
+         
+        },
+        
+        error: function (err) {
+           alert("Lỗi lấy dữ liệu")
+        }
+      });
+    }
+    else {
+      alert('Nhập đầy đủ chuỗi SLID và IP')
+    }
+    
+  }
+
+
+function getDataShowInfoOnu() {
+
+var ip = document.getElementById('idIPOLT').value;
+var chuoiid = document.getElementById('idPassword').value;
+
+var slid_ip = chuoiid + "_" + ip;
+if (chuoiid.length == 9 && ip.length == 11 ) {
+   
+  
+  $.ajax({
+    url: '/getInfoOnuOLT/' + slid_ip,
+    type: 'GET',
+    beforeSend: function(){
+      delayedAlert();
+      delayedAlert2();
+    },
+    complete: function() {
+      clearAlert();
+    },
+    success: function (res) {
+    
+      $("#outputCLI").html(res);
+     
+    },
+    
+    error: function (err) {
+       alert("Lỗi lấy dữ liệu")
+    }
+  });
+}
+else {
+  alert('Nhập đầy đủ chuỗi SLID và IP')
+}
+
+}
+
+  function getInfoOLT(ip) {
+ //   document.getElementById('txtvlan').value = ip;
+  //  alert(ip.length)
+  var chuoiid = document.getElementById('idPassword').value;
+ //  alert(ip);
+   var slid_ip = chuoiid + "_" + ip;
+  if (chuoiid.length == 9 && ip.length ==11) {
+
+    $.ajax({
+        url: '/getVlanNet/' + slid_ip,
+        type: 'GET',
+        success: function (res) {
+          $("#idvlanmytv").val(res.VlanVod);
+          $("#idvlanGNMS").val(res.VlanGNMS);
+          $("#idvlanNet").val(res.VlanNet);
+          $("#outputCLI").html(res);
+         
+         
+        
+        },
+        error: function (err) {
+         
+        }
+      });
+
+  }
+
+   else  if (ip.length == 11) {
+      $.ajax({
+        url: '/getInfoOLT/' + ip,
+        type: 'GET',
+        success: function (res) {
+          $("#idvlanmytv").val(res.VlanVod);
+          $("#idvlanGNMS").val(res.VlanGNMS);
+          //alert(res);
+          $("#outputCLI").html(res);
+         
+        
+        },
+        
+        error: function (err) {
+          $("#idvlanmytv").val("loi");
+        }
+      });
+    }
+  }
+
+
+
+  
+  function getVlanNet(chuoiid) {
+   var ip = document.getElementById('idIPOLT').value;
+ //  alert(ip);
+   var slid_ip = chuoiid + "_" + ip;
+    if (chuoiid.length == 9 && ip.length ==11) {
+      $.ajax({
+        url: '/getVlanNet/' + slid_ip,
+        type: 'GET',
+        success: function (res) {
+          $("#idvlanmytv").val(res.VlanVod);
+          $("#idvlanGNMS").val(res.VlanGNMS);
+          $("#idvlanNet").val(res.VlanNet);
+         //alert(res.VlanNet);
+         
+        
+        },
+        error: function (err) {
+         
+        }
+      });
+    }
+  }
+</script>

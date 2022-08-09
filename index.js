@@ -20,6 +20,6 @@ app.use(express.static('sql'));
 app.use(express.static('views'));
 app.use(express.static('public'));
 
-route(app, process);
+route(app);
 server.listen(process.env.PORT || PORT);
 console.log('Server nodejs chạy tại địa chỉ: ' + ip.address() + ':' + PORT);

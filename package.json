@@ -18,6 +18,7 @@
         "json-server": "^0.17.0",
         "msnodesqlv8": "^2.4.8",
         "mssql": "^8.1.2",
+        "python-shell": "^3.0.1",
         "telnet-client": "^2.0.3"
     },
     "devDependencies": {
